@@ -1,5 +1,6 @@
 package com.restaurante.temperomagico.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,11 +22,14 @@ public class Agendamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull(message = "A mesa deve ser informada")
-//    private Mesa mesa;
-//
-//    @NotNull(message = "O usuário deve ser informado")
-//    private Usuario usuario;
+    @OneToOne
+    @NotNull(message = "A mesa deve ser informada")
+    private Mesa mesa;
+
+    @OneToOne
+    @NotNull(message = "O usuário deve ser informado")
+    private Usuario usuario;
+
 
     @NotNull(message = "A data de inicio deve ser informada")
     private LocalDateTime dataInicio;
