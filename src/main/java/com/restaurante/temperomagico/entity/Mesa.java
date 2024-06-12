@@ -28,6 +28,6 @@ public class Mesa {
 
     @ManyToOne
     @JsonIgnoreProperties("mesa")
-    private Funcionario funcionario;
+    private Usuario usuario;
 
 }
