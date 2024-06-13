@@ -2,6 +2,8 @@ package com.restaurante.temperomagico.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -23,7 +25,8 @@ public class Mesa {
     private Long id;
 
     @NotNull(message = "A quantidade de cadeiras deve ser informada")
-    @Size(min=2 , max = 8 , message = "A quantidade de cadeiras deve estar entre 2 e 8")
+    @Min(2)
+    @Max(8)
     private int quantidadeCadeiras;
 
     @ManyToOne
