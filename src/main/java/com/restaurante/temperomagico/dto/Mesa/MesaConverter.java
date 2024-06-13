@@ -6,6 +6,6 @@ import com.restaurante.temperomagico.entity.Usuario;
 public class MesaConverter {
 
     public static Mesa registrarToMesa (MesaRegistrar mesaRegistrar, Usuario funcionario){
-        return new Mesa(null ,mesaRegistrar.numCadeiras(), funcionario);
+        return new Mesa(mesaRegistrar.id(), mesaRegistrar.numCadeiras(), funcionario);
     }
 }

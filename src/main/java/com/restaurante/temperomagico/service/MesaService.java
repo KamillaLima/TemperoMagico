@@ -2,6 +2,8 @@ package com.restaurante.temperomagico.service;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.restaurante.temperomagico.Exceptions.MesaJaExiste;
 import com.restaurante.temperomagico.dto.Mesa.MesaConverter;
 import com.restaurante.temperomagico.dto.Mesa.MesaRegistrar;
 import com.restaurante.temperomagico.entity.Mesa;
@@ -22,10 +24,22 @@ public class MesaService {
         var usuarioRelacionado = userRepository.findById(mesa.idFuncionario());
         if (usuarioRelacionado.isEmpty()) return null;
 
-        var mesaCadastrada = repository.save(MesaConverter.registrarToMesa(mesa,usuarioRelacionado.get()));
+        if (repository.existsById(mesa.id())){
+            throw new MesaJaExiste("O ID informado para essa mesa já esta cadastrado");
+        }
+
         
+        var mesaCadastrada = MesaConverter.registrarToMesa(mesa,usuarioRelacionado.get());
+        repository.save(mesaCadastrada);
         System.out.println("Saiu da service com mesa cadastrada");
         return Optional.of(mesaCadastrada);
     }
+    
+    public Optional<Mesa> PegarPeloId(Long id) {
+        var mesaDb = repository.findById(id);
+        if (mesaDb.isEmpty()) return null;
+        return mesaDb;
+    }
+
     
 }

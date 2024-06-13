@@ -21,7 +21,6 @@ import lombok.Setter;
 public class Mesa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "A quantidade de cadeiras deve ser informada")

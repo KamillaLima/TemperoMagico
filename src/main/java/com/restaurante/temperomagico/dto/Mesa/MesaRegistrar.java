@@ -1,5 +1,5 @@
 package com.restaurante.temperomagico.dto.Mesa;
 
-public record MesaRegistrar(int numCadeiras, Long idFuncionario){
+public record MesaRegistrar(Long id,int numCadeiras, Long idFuncionario){
     
 }
