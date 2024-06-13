@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,11 +30,13 @@ public class Usuario {
     private String nome;
 
     @Email
+    @Column(unique=true)
     @NotNull(message = "O email é obrigatório")
     private String email;
 
     @NotNull(message = "A senha é obrigatória")
     @Size(min=8 ,message = "A senha deve possuir mais de 8 caracteres")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
     private String senha;
 
     @NotNull(message = "O número de celular é obrigatório")
@@ -45,4 +48,7 @@ public class Usuario {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("usuario")
     private List<Mesa> mesa;
+
+    @Enumerated(EnumType.STRING)
+    private TipoUsuario tipoUsuario = TipoUsuario.FUNCIONARIO ;
 }
