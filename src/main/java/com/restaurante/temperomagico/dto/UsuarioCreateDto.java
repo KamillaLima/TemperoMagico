@@ -4,6 +4,7 @@ import com.restaurante.temperomagico.entity.TipoUsuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
@@ -26,6 +27,7 @@ public class UsuarioCreateDto {
 
     @NotNull(message = "A senha é obrigatória")
     @Size(min=8 ,message = "A senha deve possuir mais de 8 caracteres")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$")
     private String senha;
 
     @NotNull(message = "O número de celular é obrigatório")
