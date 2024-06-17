@@ -49,4 +49,12 @@ public class AgendamentoService {
     public Agendamento pegarAgendamentoPeloId (Long id){
         return agendamentoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não foi possível encontrar nenhum agendamento com esse ID"));
     }
+
+    public Agendamento desativarAgendamento(Long id){
+        var agendamento = agendamentoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não foi possível encontrar nenhum agendamento com esse Id"));
+
+        agendamento.setAtivo(false);
+        agendamentoRepository.save(agendamento);
+        return agendamento;
+    }
 }

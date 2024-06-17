@@ -16,8 +16,6 @@ import com.restaurante.temperomagico.dto.Mesa.MesaRegistrar;
 import com.restaurante.temperomagico.entity.Mesa;
 import com.restaurante.temperomagico.service.MesaService;
 
-import jakarta.websocket.server.PathParam;
-
 
 @RestController
 @RequestMapping("/api/mesa")
