@@ -41,5 +41,12 @@ public class MesaService {
         return mesaDb;
     }
 
+    public Optional<Mesa> RemoverMesa (Long id){
+        var mesaDb = repository.findById(id);
+        if (mesaDb.isEmpty()) return null;
+
+        repository.delete(mesaDb.get());
+        return mesaDb;
+    }
     
 }
