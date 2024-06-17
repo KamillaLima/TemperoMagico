@@ -1,5 +1,7 @@
 package com.restaurante.temperomagico.service;
 
+import java.util.Optional;
+
 import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,8 @@ import com.restaurante.temperomagico.entity.Usuario;
 import com.restaurante.temperomagico.repository.AgendamentoRepository;
 import com.restaurante.temperomagico.repository.MesaRepository;
 import com.restaurante.temperomagico.repository.UsuarioRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AgendamentoService {
@@ -42,4 +46,7 @@ public class AgendamentoService {
 
     }
 
+    public Agendamento pegarAgendamentoPeloId (Long id){
+        return agendamentoRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Não foi possível encontrar nenhum agendamento com esse ID"));
+    }
 }
