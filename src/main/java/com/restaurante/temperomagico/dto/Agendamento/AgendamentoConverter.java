@@ -16,6 +16,7 @@ public class AgendamentoConverter {
         return new Agendamento(null, mesa, usuario, dataInicio, dataInicio.plusHours(2l), true);
     }
 
+
     public static AgendamentoUsuarioDto agendamentoToAgendamentoUsuarioDto (Agendamento agendamento){
         return new AgendamentoUsuarioDto(agendamento.getUsuario().getNome(), agendamento.getDataInicio(), agendamento.getDataTermino(), agendamento.isAtivo());
     }

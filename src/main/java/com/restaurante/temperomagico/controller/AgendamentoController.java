@@ -1,5 +1,6 @@
 package com.restaurante.temperomagico.controller;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -7,11 +8,15 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import com.restaurante.temperomagico.Exceptions.UsuarioOuMesaNaoExistem;
 import com.restaurante.temperomagico.dto.Agendamento.AgendamentoConverter;
+import com.restaurante.temperomagico.dto.Agendamento.AgendamentoDatasDto;
 import com.restaurante.temperomagico.dto.Agendamento.AgendamentoUsuarioDto;
 import com.restaurante.temperomagico.dto.Agendamento.CriarAgendamento;
 import com.restaurante.temperomagico.entity.Agendamento;
@@ -28,7 +33,7 @@ public class AgendamentoController {
     AgendamentoService agendamentoService;
 
     @PostMapping
-    public ResponseEntity<Agendamento> registrarAgendamento (CriarAgendamento agendamentoDto){
+    public ResponseEntity<Agendamento> registrarAgendamento (@RequestBody CriarAgendamento agendamentoDto){
         try{
             var agendamentoRegistrado = agendamentoService.registrarAgendamento(agendamentoDto);
             return ResponseEntity.ok().body(agendamentoRegistrado);
@@ -57,5 +62,17 @@ public class AgendamentoController {
         }catch(EntityNotFoundException excp){
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/data")
+    public ResponseEntity<List<AgendamentoUsuarioDto>> pegarPorIntervalosDeData(AgendamentoDatasDto agendamentoDatas){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        var dataInicio = LocalDateTime.parse(agendamentoDatas.dataInicio(), formatter);
+        var dataFim = LocalDateTime.parse(agendamentoDatas.dataFim(), formatter);
+
+        var agendamentos = agendamentoService.pegarAgendamentosPorDatas(dataInicio,dataFim)
+        .stream().map(agend -> AgendamentoConverter.agendamentoToAgendamentoUsuarioDto(agend)).toList();
+         
+        return ResponseEntity.ok().body(agendamentos);
     }
 }
